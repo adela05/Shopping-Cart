@@ -21,7 +21,6 @@ public class Shopping {
     private Integer quantity;
     @NotEmpty
     private String category;
-    @NotNull
     private Boolean isDomestic;
 
 
