@@ -1,0 +1,14 @@
+<input [(ngModel)]="searchTerm" class="form-control" placeholder="Search">
+<div class="container">
+    <div class="row">
+            <h4>List of Items for Sale</h4>
+        <div *ngFor="let item of (allItems | search:searchTerm)" class="card col-md-12" style="width: 12rem;">            
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Add the item-card here -->
+                    <app-item-card [item]=item></app-item-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
