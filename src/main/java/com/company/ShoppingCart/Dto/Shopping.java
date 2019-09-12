@@ -21,7 +21,9 @@ public class Shopping {
     private Integer quantity;
     @NotEmpty
     private String category;
+    @NotNull
     private Boolean isDomestic;
+    private String img;
 
 
     public Integer getId() {
@@ -70,5 +72,13 @@ public class Shopping {
 
     public void setDomestic(Boolean domestic) {
         isDomestic = domestic;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
