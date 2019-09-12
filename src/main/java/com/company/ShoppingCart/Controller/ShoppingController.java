@@ -38,4 +38,10 @@ public class ShoppingController {
         return service.deleteItem(id);
     }
 
+    // PURCHASE
+    @RequestMapping(value = "/purchase", method = RequestMethod.POST)
+    public void purchase(@RequestBody @Valid List<Shopping> shopping){
+        service.purchase(shopping);
+    }
+
 }

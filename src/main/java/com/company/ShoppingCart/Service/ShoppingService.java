@@ -35,13 +35,14 @@ public class ShoppingService {
         return null;
     }
 
-    public void purchase(Shopping[] shopping){
-
+    public void purchase(List<Shopping> shopping){
+        this.salesTax(shopping);
     }
 
      // Price multiply by qty
     public Float priceByQty(Float price, Integer quantity){
         float total = price * quantity;
+        return total;
     }
     // Sales Tax 10 percent multiply by price on Non-Exempt Items
     public void salesTax(List<Shopping> exempt){
@@ -59,5 +60,4 @@ public class ShoppingService {
         }
 
   }
-
 }

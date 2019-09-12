@@ -23,7 +23,7 @@ public class Shopping {
     private String category;
     @NotNull
     private Boolean isDomestic;
-    private String img;
+    private String imgUrl;
 
 
     public Integer getId() {
@@ -74,11 +74,11 @@ public class Shopping {
         isDomestic = domestic;
     }
 
-    public String getImg() {
-        return img;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
