@@ -3,7 +3,7 @@ package com.company.ShoppingCart.ServiceTest;
 import com.company.ShoppingCart.Dao.ShoppingRepository;
 import com.company.ShoppingCart.Dto.Shopping;
 import com.company.ShoppingCart.Service.ShoppingService;
-import jdk.internal.module.ModuleBootstrap;
+//import jdk.internal.module.ModuleBootstrap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,4 +69,5 @@ public class ShoppingServiceTest {
         when(shopRepoMock.save(s1)).thenReturn(s1);
         assertEquals(s1, service.updateItem(s1, 1));
         }
+
 }

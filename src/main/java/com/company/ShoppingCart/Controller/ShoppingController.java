@@ -40,8 +40,8 @@ public class ShoppingController {
 
     // PURCHASE
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
-    public void purchase(@RequestBody @Valid List<Shopping> shopping){
-        service.purchase(shopping);
+    public Float purchase(@RequestBody @Valid List<Shopping> shopping){
+        return service.purchase(shopping);
     }
 
 }
