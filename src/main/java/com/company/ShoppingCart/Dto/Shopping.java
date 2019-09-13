@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -80,5 +81,37 @@ public class Shopping {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shopping shopping = (Shopping) o;
+        return Objects.equals(id, shopping.id) &&
+                Objects.equals(name, shopping.name) &&
+                Objects.equals(price, shopping.price) &&
+                Objects.equals(quantity, shopping.quantity) &&
+                Objects.equals(category, shopping.category) &&
+                Objects.equals(isDomestic, shopping.isDomestic) &&
+                Objects.equals(imgUrl, shopping.imgUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, quantity, category, isDomestic, imgUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "Shopping{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", category='" + category + '\'' +
+                ", isDomestic=" + isDomestic +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
     }
 }

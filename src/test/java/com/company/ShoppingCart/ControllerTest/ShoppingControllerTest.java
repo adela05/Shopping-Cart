@@ -134,4 +134,27 @@ public class ShoppingControllerTest {
 
         verify(mockShopService).updateItem(newShopping, 2);
     }
+    
+//    @Test
+//    public void ShouldPurchaseShopping() throws Exception{
+//        Shopping newShopping = new Shopping();
+//        newShopping.setId(3);
+//        newShopping.setName("Advil - headache pills");
+//        newShopping.setPrice(8.99f);
+//        newShopping.setQuantity(2);
+//        newShopping.setCategory("Medical Supplies");
+//        newShopping.setDomestic(true);
+//        newShopping.setImgUrl("https://i5.walmartimages.com/asr/aa60b2ef-2315-4241-9030-0a6901a558e5_1.e1e3c7843c959300be10168838e92dd0.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF");
+//
+//        when(mockShopService.addItem(newShopping)).thenReturn(newShopping);
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        String objStr = mapper.writeValueAsString(newShopping);
+//
+//        mockMvc.perform(post("/purchase")
+//        .contentType(MediaType.APPLICATION_JSON)
+//        .content(objStr)).andExpect(status().isOk()).andExpect(jsonPath("$.price").value(newShopping.getPrice())).andReturn();
+//
+//        verify(mockShopService).addItem(newShopping);
+//    }
 }

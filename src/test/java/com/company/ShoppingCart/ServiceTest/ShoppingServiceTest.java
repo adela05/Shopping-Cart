@@ -3,7 +3,7 @@ package com.company.ShoppingCart.ServiceTest;
 import com.company.ShoppingCart.Dao.ShoppingRepository;
 import com.company.ShoppingCart.Dto.Shopping;
 import com.company.ShoppingCart.Service.ShoppingService;
-//import jdk.internal.module.ModuleBootstrap;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +24,12 @@ public class ShoppingServiceTest {
     @Autowired
     ShoppingRepository shopRepoMock;
 
+
     @InjectMocks
     ShoppingService service;
     Shopping s1;
     Shopping s2;
+    Shopping s3;
 
     List<Shopping> shoppingList;
     @Before
@@ -45,12 +47,21 @@ public class ShoppingServiceTest {
         s2.setId(2);
         s2.setName("Advil - headache pills");
         s2.setPrice(8.99f);
-        s2.setQuantity(2);
+        s2.setQuantity(1);
         s2.setCategory("Medical Supplies");
         s2.setDomestic(true);
         s2.setImgUrl("https://i5.walmartimages.com/asr/aa60b2ef-2315-4241-9030-0a6901a558e5_1.e1e3c7843c959300be10168838e92dd0.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF");
 
-        shoppingList = Arrays.asList(s1,s2);
+        s3 = new Shopping();
+        s3.setId(3);
+        s3.setName("Queen CD-Album");
+        s3.setPrice(19.99f);
+        s3.setQuantity(1);
+        s3.setCategory("Music");
+        s3.setDomestic(true);
+        s3.setImgUrl("https://images-na.ssl-images-amazon.com/images/I/C1YRnQIzuTS._SL1000_.png");
+
+        shoppingList = Arrays.asList(s1,s2, s3);
     }
 
         @Test
@@ -58,7 +69,6 @@ public class ShoppingServiceTest {
             when(shopRepoMock.findAll()).thenReturn(shoppingList);
             assertEquals(shoppingList, service.getAllItems());
         }
-
         @Test
         public void shouldAddShopping(){
         when(shopRepoMock.save(s1)).thenReturn(s1);
@@ -67,7 +77,19 @@ public class ShoppingServiceTest {
         @Test
         public void shouldUpdateShopping(){
         when(shopRepoMock.save(s1)).thenReturn(s1);
-        assertEquals(s1, service.updateItem(s1, 1));
+        assertEquals(s1, service.updateItem(s1, s1.getId()));
         }
+        @Test
+        public void shouldPurchase(){
+        List<Shopping> testOne = Arrays.asList(s1, s2);
+        List<Shopping> testTwo = Arrays.asList(s2, s3);
+        List<Shopping> testThree = Arrays.asList(s1, s3);
+        Float purchaseOne = service.purchase(testOne);
+        Float purchaseTwo = service.purchase(testTwo);
+        Float purchaseThree = service.purchase(testThree);
 
+       assertEquals(purchaseOne, service.purchase(testOne));
+       assertEquals(purchaseTwo, service.purchase(testTwo));
+       assertEquals(purchaseThree, service.purchase(testThree));
+    }
 }

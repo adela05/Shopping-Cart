@@ -24,7 +24,7 @@ public class ShoppingService {
 
     public Shopping updateItem(Shopping shopping, Integer id){
         if(shopping.getId() == id){
-            shopRepo.save(shopping);
+            return shopRepo.save(shopping);
         }
         return null;
     }
@@ -37,7 +37,7 @@ public class ShoppingService {
     public Float purchase(List<Shopping> shopping){
         return this.allTaxes(shopping);
     }
-    // Try to use Shopping as an Array (it turned my getPrice() red)
+    // Receipt Calculations on Taxes
     public Float allTaxes(List<Shopping> shopping) {
         float grandTotal = 0.0f;
         for (int i = 0; i < shopping.size(); i++) {
@@ -54,15 +54,16 @@ public class ShoppingService {
                 throw new InvalidParameterException("Item quantity must be greater than 0");
             }
             // Local Tax 10 percent
-           if (!shopping.get(i).getCategory().equals("Books") || !shopping.get(i).getCategory().equals("Food") || !shopping.get(i).getCategory().equals("Medical Supplies")) {
+           if (!shopping.get(i).getCategory().equalsIgnoreCase("Book") && !shopping.get(i).getCategory().equalsIgnoreCase("Food") && !shopping.get(i).getCategory().equalsIgnoreCase("Medical Supplies")) {
                 localRate = .10f * subTotal;
                 localRate = Math.round(localRate * 20.0f) / 20.0f;
                 totalLocalRate += localRate;
-            } //else if {}
+            }
+           //else if {}
 
             // Import Tax 5 percent
             if (!shopping.get(i).getDomestic()) {
-                importRate = .5f * subTotal;
+                importRate = .05f * subTotal;
                 importRate = Math.round(importRate * 20.0f) / 20.0f;
                 totalImportRate += importRate;
             }

@@ -7,6 +7,7 @@ import { Item } from './item';
 	providedIn: 'root'
 })
 export class ItemService {
+	items: Item[] = [];
 	apiUrl = 'http://localhost:8080';
 
 	constructor(private http: HttpClient) {}
