@@ -2,11 +2,10 @@ package com.company.ShoppingCart.Service;
 
 import com.company.ShoppingCart.Dao.ShoppingRepository;
 import com.company.ShoppingCart.Dto.Shopping;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @Component
@@ -36,49 +35,45 @@ public class ShoppingService {
     }
 
     public void purchase(List<Shopping> shopping){
-        this.localTax(shopping);
-        this.importTax(shopping);
+        this.allTaxes(shopping);
     }
+    // Try to use Shopping as an Array (it turned my getPrice() red)
+    public Shopping allTaxes(Shopping[] shopping){
+        Float itemPrice = shopping.getPrice();
+        Integer itemQty = shopping.getQuantity();
+        Float subTotal = itemPrice * itemQty;
+        Double localRate;
+        Double importRate;
+        Double totalLocalRate;
+        Double totalImportRate;
+        Double taxTotal = totalLocalRate + totalImportRate;
 
-     // Price multiply by qty
-    public Float priceByQty(Float price, Integer quantity){
-        float total = price * quantity;
-        return total;
-    }
-    // Local Tax 10 percent multiply by price on Non-Exempt Items
-    public void localTax(List<Shopping> exempt){
-        float totalLocalTax = 0;
-        double tax = 0;
-
-        for(int i = 0; i < exempt.size(); i++){
-            totalLocalTax=this.priceByQty(exempt.get(i).getPrice(), exempt.get(i).getQuantity());
+        if(itemQty <= 0){
+            throw new InvalidParameterException("Item quantity must be greater than 0");
+        }
+        // Local Tax 10 percent
+        List<Shopping> exempt = new Shopping[];
+        for(int i = 0; i < exempt.size(); i++) {
             if(!exempt.equals("Books") || !exempt.equals("Food") || !exempt.equals("Medical Supplies")){
-                tax = .10 * totalLocalTax;
-                tax = Math.round(tax * 20.0)/20.0;
-           }
-            else{
-                totalLocalTax += tax;
+                localRate = .10 * subTotal;
+                localRate = Math.round(localRate * 20.0) /20.0;
+                totalLocalRate += localRate;
             }
         }
-    }
-    // Import Tax 5 percent multiply by price on Exempt and all Items.
-    public void importTax(List<Shopping> nonExempt){
-        float totalImportTax = 0;
-        double taxDuty = 0;
+        // Import Tax 5 percent
+        List<Shopping> nonExempt = new Shopping[];
         for(int count = 0; count < nonExempt.size(); count++){
-            totalImportTax=this.priceByQty(nonExempt.get(count).getPrice(), nonExempt.get(count).getQuantity());
-            if(nonExempt.get(count).getDomestic()==false){
-                taxDuty = .5 * totalImportTax;
-                taxDuty = Math.round(taxDuty * 20.0)/20.0;
-            }
-            else {
-                totalImportTax += taxDuty;
+            if(!nonExempt.get(count).getDomestic()){
+                importRate = .5 * subTotal;
+                importRate = Math.round(importRate * 20.0) /20.0;
+                totalImportRate += importRate;
             }
         }
+        // Adding both tax rates with subTotal
+        public Float grandTotal(){
+            double sum = taxTotal + subTotal;
+        }
     }
-    // Adding both local and import tax
-    public void salesTaxes(Float totalLocalTax, Float totalImportTax){
-        float totalTaxes = totalLocalTax + totalImportTax;
-    }
-    // Add totalTaxes with grandTotal
+
+
 }
