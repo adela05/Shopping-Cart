@@ -9,9 +9,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { CartComponent } from './cart/cart.component';
 import { ItemCardComponent } from './item-list/item-card/item-card.component';
+import { SearchPipe } from './search.pipe';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
-	declarations: [ AppComponent, NavbarComponent, ItemListComponent, CartComponent, ItemCardComponent ],
+	declarations: [ AppComponent, NavbarComponent, ItemListComponent, CartComponent, ItemCardComponent, SearchPipe, PageNotFoundComponent ],
 	imports: [ BrowserModule, AppRoutingModule, HttpClientModule, FormsModule ],
 	providers: [],
 	bootstrap: [ AppComponent ]

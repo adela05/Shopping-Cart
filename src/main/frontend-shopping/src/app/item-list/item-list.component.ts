@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Item } from '../item';
 import { ItemService } from '../item.service';
 import { Subscription } from 'rxjs';
+//import {} from '../../assets/img/Toblerone.jpg'
 
 @Component({
 	selector: 'app-item-list',
@@ -9,9 +10,10 @@ import { Subscription } from 'rxjs';
 	styleUrls: [ './item-list.component.scss' ]
 })
 export class ItemListComponent implements OnInit, OnDestroy {
-	allItems: Item[] = [];
-	searchTerm = '';
-	getSub: Subscription;
+	items: Item[] = [];
+	search = '';
+	shopItemSub: Subscription;
+	filterText: string = '';
 
 	constructor(private itemService: ItemService) {}
 
@@ -19,14 +21,14 @@ export class ItemListComponent implements OnInit, OnDestroy {
 		this.getItem();
 	}
 	ngOnDestroy() {
-		if (this.getSub) {
-			this.getSub.unsubscribe();
+		if (this.shopItemSub) {
+			this.shopItemSub.unsubscribe();
 		}
 	}
 	getItem() {
-		this.getSub = this.itemService.getItem().subscribe(
-			(res: any) => {
-				this.allItems = res;
+		this.shopItemSub = this.itemService.getItem().subscribe(
+			(res: Item[]) => {
+				this.items = res;
 			},
 			(err) => {
 				console.log(err);

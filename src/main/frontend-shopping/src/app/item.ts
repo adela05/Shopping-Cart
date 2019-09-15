@@ -7,11 +7,11 @@ export class Item {
 	isDomestic: boolean;
 	imgUrl: string;
 
-	constructor(name: string, price: number, quantity: number, category: string, imgUrl: string) {
+	constructor(name: string, price: number, quantity: number, category: string, imgUrl: string, isDomestic?: boolean) {
 		this.name = name;
 		this.price = price;
 		this.quantity = quantity;
 		this.category = category;
-		this.imgUrl = this.imgUrl;
+		this.imgUrl = imgUrl;
 	}
 }
