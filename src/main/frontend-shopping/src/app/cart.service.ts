@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Item } from './item';
-import { ItemService } from './item.service';
+//import { ItemService } from './item.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -24,23 +24,23 @@ export class CartService {
 	}
 
 	addToCart(item: Item, qty: number) {
-		let itemAlreadyInCart = false;
+		let itemInCart = false;
 		this.items = this.items.map((i) => {
 			if (i.id == item.id) {
 				i.quantity += qty;
-				itemAlreadyInCart = true;
+				itemInCart = true;
 			}
 			return i;
 		});
-		if (!itemAlreadyInCart) {
+		if (!itemInCart) {
 			const newItem = new Item(item.name, item.price, item.quantity, item.category, item.imgUrl);
 			newItem.id = item.id;
 			this.items.push(newItem);
 		}
 	}
 
-	// purchase(shoppingItems: Item[]): Observable<null> {
-	// 	const url = `${this.apiUrl}/purchase`;
-	// 	return this.http.post<null>(url, shoppingItems);
-	// }
+	purchase(shoppingItems: Item[]): Observable<null> {
+		const url = `${this.apiUrl}/purchase`;
+		return this.http.post<null>(url, shoppingItems);
+	}
 }

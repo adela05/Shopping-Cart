@@ -5,6 +5,7 @@
             <th>Name</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th>Total</th>
             <th>Sales Tax</th>
             <th>SubTotal</th>
         </tr>
@@ -16,6 +17,8 @@
             <input [(ngModel)]="purchaseQty" type="number" class="form-control" [max]="item.quantity">
             <!-- Add input qty box here -->
             <td>{{item.price | currency}}</td>
+            <!-- Add the Sales Tax total -->
+            <td>{{item.quantity * item.price | currency }}</td>
             <td><button class="btn btn-outline-danger float-right" (click)="onRemoveFromCart(i)">Delete</button></td>
         </tr>
     </tbody>

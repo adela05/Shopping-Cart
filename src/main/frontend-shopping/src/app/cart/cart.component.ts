@@ -35,15 +35,20 @@ export class CartComponent implements OnInit {
 	}
 
 	onPurchase() {
-		this.transactionService.purchaseItems(this.itemInCart).subscribe((res: any) => {
-			this.cartService.emptyCart();
-			this.itemInCart = [];
-			this.text = 'Thank You for your business! Redirecting to homepage.';
+		this.transactionService.purchaseItems(this.itemInCart).subscribe(
+			(res: any) => {
+				this.cartService.emptyCart();
+				this.itemInCart = [];
+				this.text = 'Thank You for your business! Redirecting to homepage.';
 
-			setTimeout(() => {
-				this.router.navigate([ '/shopping' ]);
-			}, 1500);
-		});
+				setTimeout(() => {
+					this.router.navigate([ '/shopping' ]);
+				}, 1500);
+			},
+			(err) => {
+				console.log(err);
+			}
+		);
 	}
 	// calTotal() {
 	// 	this.subTotal = this.getItemInCart.reduce(
