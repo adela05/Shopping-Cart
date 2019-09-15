@@ -134,7 +134,7 @@ public class ShoppingControllerTest {
 
         verify(mockShopService).updateItem(newShopping, 2);
     }
-    
+
 //    @Test
 //    public void ShouldPurchaseShopping() throws Exception{
 //        Shopping newShopping = new Shopping();
