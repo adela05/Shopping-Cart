@@ -1,1 +1,22 @@
-<p>cart works!</p>
+<table class="table" *ngIf="itemInCart.length > 0">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Sales Tax</th>
+            <th>SubTotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of itemInCart; let i = index">
+            <td>{{item.name}}</td>
+            <!-- Add input qty box here -->
+            <td>{{item.price | currency}}</td>
+            <td><button class="btn btn-outline-danger float-right" (click)="onRemoveFromCart(i)">Delete</button></td>
+        </tr>
+    </tbody>
+</table>
+<!-- Add Total of purchase here -->
+<button *ngIf="itemInCart.length > 0" (click)="onPurchase()">Purchase</button>
+<h5 *ngIf="itemInCart.length == 0">{{Text}}</h5>

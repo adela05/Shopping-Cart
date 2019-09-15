@@ -1,43 +1,58 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Item } from './item';
+import { ItemService } from './item.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class CartService {
-	itemsInCart: Item[] = [];
-	apiUrl = 'http://localhost:8080';
+	items: Item[] = [];
+	//apiUrl = 'http://localhost:8080';
 
 	constructor(private http: HttpClient) {}
 
-	addToCart(item: Item, qty: number) {
-		let itemAlreadyInCart = false;
-		this.itemsInCart = this.itemsInCart.map((i) => {
-			if (i.id == item.id) {
-				i.quantity += qty;
-				itemAlreadyInCart = true;
-			}
-			return i;
-		});
-		if (!itemAlreadyInCart) {
-			const newItem = new Item(item.name, item.price, item.quantity, item.category, item.imgUrl);
-			newItem.id = item.id;
-			this.itemsInCart.push(newItem);
-		}
+	addToCart(item: Item) {
+		this.items.push(item);
 	}
-	getItemsInCart(): Item[] {
-		return this.itemsInCart;
+	getItemInCart(): Item[] {
+		return this.items;
 	}
-	removeItemFromCart(index: number) {
-		this.itemsInCart.splice(index, 1);
+	deleteByIndex(i: number) {
+		this.items.splice(i, 1);
 	}
 	emptyCart() {
-		this.itemsInCart = [];
+		this.items = [];
 	}
-	purchase(shoppingItems: Item[]): Observable<null> {
-		const url = `${this.apiUrl}/purchase`;
-		return this.http.post<null>(url, shoppingItems);
-	}
+
+	// addToCart(item: Item, qty: number) {
+	// 	let itemAlreadyInCart = false;
+	// 	this.itemInCart = this.itemInCart.map((i) => {
+	// 		if (i.id == item.id) {
+	// 			i.quantity += qty;
+	// 			itemAlreadyInCart = true;
+	// 		}
+	// 		return i;
+	// 	});
+	// 	if (!itemAlreadyInCart) {
+	// 		const newItem = new Item(item.name, item.price, item.quantity, item.category, item.imgUrl);
+	// 		newItem.id = item.id;
+	// 		this.itemInCart.push(newItem);
+	// 	}
+	// }
+	// getItemsInCart(): Item[] {
+	// 	return this.itemInCart;
+	// }
+
+	// emptyCart() {
+	// 	this.itemInCart = [];
+	// }
+	// purchase(shoppingItems: Item[]): Observable<null> {
+	// 	const url = `${this.apiUrl}/purchase`;
+	// 	return this.http.post<null>(url, shoppingItems);
+	// }
+	// removeItemFromCart(index: number) {
+	// 	this.itemInCart.splice(index, 1);
+	// }
 }
