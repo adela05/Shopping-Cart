@@ -11,8 +11,9 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 	itemInCart: Item[] = [];
-	text = '';
-	total = 0;
+	text = 'No items in cart';
+	subTotal = 0;
+	apiUrl = '';
 
 	constructor(
 		private cartService: CartService,
@@ -22,23 +23,17 @@ export class CartComponent implements OnInit {
 
 	ngOnInit() {
 		this.getItemInCart();
+		//this.calTotal();
 	}
 	onRemoveFromCart(index: number) {
 		this.cartService.deleteByIndex(index);
 		this.getItemInCart();
+		//this.calTotal();
 	}
 	getItemInCart() {
 		this.itemInCart = this.cartService.getItemInCart();
 	}
 
-	calTotal() {
-		this.total = 0;
-		this.itemInCart.forEach((i) => {
-			if (i.price) {
-				this.total += i.price;
-			}
-		});
-	}
 	onPurchase() {
 		this.transactionService.purchaseItems(this.itemInCart).subscribe((res: any) => {
 			this.cartService.emptyCart();
@@ -50,4 +45,10 @@ export class CartComponent implements OnInit {
 			}, 1500);
 		});
 	}
+	// calTotal() {
+	// 	this.subTotal = this.getItemInCart.reduce(
+	// 		(subTotal, currVal) => subTotal + currVal.price * currVal.quantity,
+	// 		0
+	// 	);
+	// }
 }

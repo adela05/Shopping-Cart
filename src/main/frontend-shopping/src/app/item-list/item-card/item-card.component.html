@@ -4,10 +4,10 @@
             <img class="card-img-top" [src]="item?.imgUrl" alt="Card Image Cap" height="auto">
             <div class="card-body">
                 <h5 class="card-title">{{item.name}}</h5>
-                <p class="card-text">{{item.category}}: {{item.price}}</p>
+                <p class="card-text">{{item.category}}: {{item.price | currency}}</p>
                 <!-- Add buttons and qty -->
-                <input class=" w-25" [(ngModel)]="purchaseQty" type="number" placeholder = "Qty" [max]="item.quantity">
-                <button class="btn btn-outline-success float-sm-right" [class.disabled]="purchaseQty" type="button" (click)="onAddToCart(item)">{{buttonText}}</button>
+                <input class=" w-25" type="number" placeholder = "Qty" [max]="item.quantity">
+                <button class="btn btn-outline-success float-sm-right" type="button" (click)="onAddToCart(item)">{{buttonText}}</button>
                 
             </div>
         </div>
