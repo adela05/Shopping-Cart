@@ -13,20 +13,24 @@ export class CheckoutService {
 	constructor(private http: HttpClient) {}
 
 	addCart(item: Item, qty: number) {
-		let itemInCart = false;
-		this.itemCart = this.itemCart.map((i) => {
-			if (i.id == item.id) {
-				i.quantity += qty;
-				itemInCart = true;
-			}
-			return i;
-		});
-		if (!itemInCart) {
-			const newItem = new Item(item.name, item.price, item.quantity, item.category, item.imgUrl);
-			newItem.id = item.id;
-			this.itemCart.push(newItem);
-		}
+		this.itemCart.push(item);
 	}
+
+	// addCart(item: Item, qty: number) {
+	// 	let itemInCart = false;
+	// 	this.itemCart = this.itemCart.map((i) => {
+	// 		if (i.id == item.id) {
+	// 			i.quantity += qty;
+	// 			itemInCart = true;
+	// 		}
+	// 		return i;
+	// 	});
+	// 	if (!itemInCart) {
+	// 		const newItem = new Item(item.name, item.price, item.quantity, item.category, item.imgUrl);
+	// 		newItem.id = item.id;
+	// 		this.itemCart.push(newItem);
+	// 	}
+	// }
 	getItemCart(): Item[] {
 		return this.itemCart;
 	}

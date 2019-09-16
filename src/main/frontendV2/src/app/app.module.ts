@@ -12,7 +12,14 @@ import { SearchItemPipe } from './search-item.pipe';
 import { CartComponent } from './cart/cart.component';
 
 @NgModule({
-	declarations: [ AppComponent, NavBarComponent, ItemMasterComponent, ItemCardComponent, SearchItemPipe, CartComponent ],
+	declarations: [
+		AppComponent,
+		NavBarComponent,
+		ItemMasterComponent,
+		ItemCardComponent,
+		SearchItemPipe,
+		CartComponent
+	],
 	imports: [ BrowserModule, AppRoutingModule, HttpClientModule, FormsModule ],
 	providers: [],
 	bootstrap: [ AppComponent ]

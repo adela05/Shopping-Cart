@@ -1,15 +1,17 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="card border-dark" style="width: 16rem;">
-            <img class="card-img-top" [src]="item?.imgUrl" alt="Card Image Cap" height="auto">
-            <div class="card-body">
-                <h5 class="card-title">{{item.name}}</h5>
-                <p class="card-text">{{item.category}}: {{item.price | currency}}</p>
-                <!-- Add buttons and qty -->
-                <input class="form-control" type="number" placeholder = "Qty" [max]="item.quantity">
-                <button class="btn btn-outline-success float-sm-right" type="button" (click)="onAddCart(item)">{{buttonTitle}}</button>
+<div class="card border-dark" style="width: 16rem;">
+        <img class="card-img-top" [src]="item?.imgUrl" alt="Card Image Cap" height="auto">
+        <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text">{{item.category}}: {{item.price | currency}}</p>
+            <!-- Add buttons and qty -->
+            <div *ngFor="let item of items; let i = index">
                 
-            </div>
+                
+            </div>   
+            <input *ngIf="editingQty[i]" class="form-control" type="number" placeholder = "Qty" [max]="item.quantity">        
+            <button *ngIf="!editingQty[i]" (click)="onStartEdit(i)" class="btn btn-warning">Edit Qty</button>
+            <button *ngIf="editingQty[i]" (click)="onSaveEdit(i)" class="btn btn-success">Save</button>
+            <button class="btn btn-success float-sm-right mt-2" type="button" [class.disabled]="purchaseQty > item.quantity" (click)="onAddCart(item)">{{buttonTitle}}</button>
+            
         </div>
-    </div>
     </div>

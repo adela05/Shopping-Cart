@@ -6,23 +6,26 @@
             <th>Quantity</th>
             <th>Price</th>
             <th>Total</th>
-            <th>Sales Tax</th>
-            <th>SubTotal</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let item of itemCart; let i = index">
             <td>{{item.name}}</td>
             <td>{{item.quantity}}</td>
-            <input [(ngModel)]="purchaseQty" type="number" class="form-control" [max]="item.quantity">
             <!-- Add input qty box here -->
+            <!-- <input [(ngModel)]="purchaseQty" type="number" class="form-control" [max]="item.quantity"> -->
+    
             <td>{{item.price | currency}}</td>
-            <!-- Add the Sales Tax total -->
-            <td>{{item.quantity * item.price | currency }}</td>
-            <td><button class="btn btn-outline-danger float-right" (click)="onRemoveItemCart(index)">Delete</button></td>
+            <!-- Add the Sub-total (price * qty) from Java here -->
+            <td>{{item.subTotal | currency }}</td>
+            <!-- Add the Sales Tax total (local + Import Tax) from Java here -->
+            <td><button class="btn btn-danger float-right" (click)="onRemoveItemCart(index)">Delete</button></td>
         </tr>
-    </tbody>
+    </tbody>    
 </table>
-<!-- Add Total of purchase here -->
+<!-- <span>Sales Tax: </span> Taxes from java are add here -->
+
+<!-- <span>Grand Total:</span> Add the Grand-Total (taxes + subTotal) from Java here -->
+
 <button *ngIf="itemCart.length > 0" (click)="onPurchaseItems()">Purchase</button>
 <h5 *ngIf="itemCart.length == 0">{{text}}</h5>
