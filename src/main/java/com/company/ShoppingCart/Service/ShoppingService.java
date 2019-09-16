@@ -1,6 +1,7 @@
 package com.company.ShoppingCart.Service;
 
 import com.company.ShoppingCart.Dao.ShoppingRepository;
+import com.company.ShoppingCart.Dto.Receipt;
 import com.company.ShoppingCart.Dto.Shopping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,46 +34,42 @@ public class ShoppingService {
         shopRepo.deleteById(id);
         return null;
     }
-
-    public Float purchase(List<Shopping> shopping){
+    // This method will call out the allTaxes function to the purchase route.
+    public Receipt purchase(List<Shopping> shopping){
         return this.allTaxes(shopping);
     }
     // Receipt Calculations on Taxes
-    public Float allTaxes(List<Shopping> shopping) {
-        float grandTotal = 0.0f;
+    public Receipt allTaxes(List<Shopping> shopping) {
+        Receipt r1 = new Receipt();
         for (int i = 0; i < shopping.size(); i++) {
             Float itemPrice = shopping.get(i).getPrice();
             Integer itemQty = shopping.get(i).getQuantity();
-            Float subTotal = itemPrice * itemQty;
-            Float itemTotal = 0.0f;
-            Float localRate;
-            Float importRate;
-            Float totalLocalRate = 0.0f;
-            Float totalImportRate = 0.0f;
+            r1.setSubTotal(itemPrice * itemQty);
+            r1.setLocalRate(.10f);
+            r1.setImportRate(.05f);
+            r1.setTotalImportRate(0f);
+            r1.setTotalLocalRate(0f);
 
             if (itemQty <= 0) {
                 throw new InvalidParameterException("Item quantity must be greater than 0");
             }
             // Local Tax 10 percent
            if (!shopping.get(i).getCategory().equalsIgnoreCase("Book") && !shopping.get(i).getCategory().equalsIgnoreCase("Food") && !shopping.get(i).getCategory().equalsIgnoreCase("Medical Supplies")) {
-                localRate = .10f * subTotal;
-                localRate = Math.round(localRate * 20.0f) / 20.0f;
-                totalLocalRate += localRate;
+
+                Float localTaxes = Math.round(r1.getLocalRate() * r1.getSubTotal() * 20.0f) / 20.0f;
+                r1.setTotalLocalRate(localTaxes);
             }
-           //else if {}
 
             // Import Tax 5 percent
             if (!shopping.get(i).getDomestic()) {
-                importRate = .05f * subTotal;
-                importRate = Math.round(importRate * 20.0f) / 20.0f;
-                totalImportRate += importRate;
-            }
-             float taxTotal = totalLocalRate + totalImportRate;
-            itemTotal = taxTotal + subTotal;
-            grandTotal += itemTotal;
 
+                Float impTaxes = Math.round(r1.getImportRate() * r1.getSubTotal() * 20.0f) / 20.0f;
+                r1.setTotalImportRate(impTaxes);
+            }
+             r1.setTaxTotal(r1.getTotalLocalRate() + r1.getTotalImportRate());
+            r1.setGrandTotal(r1.getTaxTotal() + r1.getSubTotal());
         }
-       return grandTotal;
+           return r1;
 
     }
 

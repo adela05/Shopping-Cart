@@ -127,14 +127,14 @@ public class ShoppingControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String objStr = mapper.writeValueAsString(newShopping);
 
-        mockMvc.perform(put("/shopping/1")
+        mockMvc.perform(put("/shopping/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objStr))
                 .andExpect(status().isOk()).andReturn();
 
         verify(mockShopService).updateItem(newShopping, 2);
     }
-
+// Will need to come back to this one later
 //    @Test
 //    public void ShouldPurchaseShopping() throws Exception{
 //        Shopping newShopping = new Shopping();

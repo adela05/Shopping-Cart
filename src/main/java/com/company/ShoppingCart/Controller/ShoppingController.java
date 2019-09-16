@@ -1,5 +1,6 @@
 package com.company.ShoppingCart.Controller;
 
+import com.company.ShoppingCart.Dto.Receipt;
 import com.company.ShoppingCart.Dto.Shopping;
 import com.company.ShoppingCart.Service.ShoppingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ShoppingController {
 
     // PURCHASE
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
-    public Float purchase(@RequestBody @Valid List<Shopping> shopping){
+    public Receipt purchase(@RequestBody @Valid List<Shopping> shopping){
         return service.purchase(shopping);
     }
 

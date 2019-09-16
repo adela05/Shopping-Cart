@@ -1,6 +1,7 @@
 package com.company.ShoppingCart.ServiceTest;
 
 import com.company.ShoppingCart.Dao.ShoppingRepository;
+import com.company.ShoppingCart.Dto.Receipt;
 import com.company.ShoppingCart.Dto.Shopping;
 import com.company.ShoppingCart.Service.ShoppingService;
 
@@ -84,9 +85,9 @@ public class ShoppingServiceTest {
         List<Shopping> testOne = Arrays.asList(s1, s2);
         List<Shopping> testTwo = Arrays.asList(s2, s3);
         List<Shopping> testThree = Arrays.asList(s1, s3);
-        Float purchaseOne = service.purchase(testOne);
-        Float purchaseTwo = service.purchase(testTwo);
-        Float purchaseThree = service.purchase(testThree);
+        Receipt purchaseOne = service.purchase(testOne);
+        Receipt purchaseTwo = service.purchase(testTwo);
+        Receipt purchaseThree = service.purchase(testThree);
 
        assertEquals(purchaseOne, service.purchase(testOne));
        assertEquals(purchaseTwo, service.purchase(testTwo));
