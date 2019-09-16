@@ -12,18 +12,15 @@ import { Receipt } from '../receipt';
 export class CartComponent implements OnInit {
 	itemCart: Item[] = [];
 	total = 0;
-	text = 'No items in cart';
 	apiUrl = '';
 	receipt = {};
-	isReceipt: boolean = true;
+	isReceipt: boolean = false;
 	constructor(private checkoutService: CheckoutService, private router: Router) {}
 
 	ngOnInit() {
 		this.getItemCart();
 	}
-	onReceiptDisplay(i: number) {
-		this.isReceipt = !this.isReceipt;
-	}
+
 	onRemoveItemCart(index: number) {
 		this.checkoutService.removeItemCart(index);
 		this.getItemCart();
@@ -33,14 +30,10 @@ export class CartComponent implements OnInit {
 	}
 	onPurchaseItems() {
 		this.checkoutService.purchaseItems(this.itemCart).subscribe((res: any) => {
+			this.isReceipt = true;
 			this.receipt = res;
 			this.checkoutService.emptyCart();
 			this.itemCart = [];
-			this.text = 'Thank you for your business! Redirecting to Homepage';
-
-			setTimeout(() => {
-				this.receipt;
-			}, 1500);
 		});
 	}
 	// add total here
