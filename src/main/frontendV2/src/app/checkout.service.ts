@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Item } from './item';
 import { Observable } from 'rxjs';
+import { Receipt } from './receipt';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class CheckoutService {
 	itemCart: Item[] = [];
+	// receipt: Receipt[] =[];
 	apiUrl = 'http://localhost:8080';
 
 	constructor(private http: HttpClient) {}
@@ -41,8 +43,8 @@ export class CheckoutService {
 		this.itemCart = [];
 	}
 
-	purchaseItems(shopItems: Item[]): Observable<null> {
+	purchaseItems(shopItems: Item[]): Observable<Receipt> {
 		const url = `${this.apiUrl}/purchase`;
-		return this.http.post<null>(url, shopItems);
+		return this.http.post<Receipt>(url, shopItems);
 	}
 }
